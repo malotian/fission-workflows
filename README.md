@@ -54,7 +54,7 @@
     kubectl --namespace kube-system patch deploy tiller-deploy -p '{"spec":{"template":{"spec":{"serviceAccount":"tiller"}}}}'
     curl -sLSf https://raw.githubusercontent.com/helm/helm/master/scripts/get | sudo bash
     helm init --skip-refresh --upgrade --service-account tiller
-    helm install --name fission --namespace fission https://github.com/fission/fission/releases/download/1.5.0/fission-all-1.5.0.tgz\n
+    helm install --name fission --namespace fission https://github.com/fission/fission/releases/download/1.5.0/fission-all-1.5.0.tgz
     fission env create --name nodejs --image fission/node-env
     fission function create --name hello --env nodejs --code hello.js
     fission function test --name hello
