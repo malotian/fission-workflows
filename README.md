@@ -1,4 +1,5 @@
 
+# fission functions
 **name.js**
 
     module.exports = async function(context) {
@@ -28,6 +29,7 @@
             };
     }
 
+# fission flow
 **helloname.wf.yaml**
 
     apiVersion: 1
@@ -43,7 +45,7 @@
         requires:
         - GenerateName
 
-**helpers**
+**usefull commands**
 
     eksctl create cluster --name fission-eks --version 1.14 --nodegroup-name standard-workers --node-type t3.medium --nodes 3 --nodes-min 1 --nodes-max 4 --node-ami auto
     aws eks --region us-east-1 update-kubeconfig --name fission-eks
