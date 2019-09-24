@@ -2,7 +2,9 @@
 # prerequisite 
 
 [awscli](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html)
+
 [eksctl](https://docs.aws.amazon.com/eks/latest/userguide/getting-started-eksctl.html)
+
 [kubectl](https://docs.aws.amazon.com/eks/latest/userguide/install-kubectl.html)
 
 # configure aws 
