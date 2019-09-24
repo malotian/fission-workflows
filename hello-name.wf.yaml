@@ -1,0 +1,12 @@
+apiVersion: 1
+output: GenerateHelloWithName
+tasks:
+  GenerateName:
+    run: name
+
+  GenerateHelloWithName:
+    run: hello
+    inputs:
+      body: "{ output('GenerateName') }"
+    requires:
+    - GenerateName
