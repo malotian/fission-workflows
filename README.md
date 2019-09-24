@@ -1,11 +1,19 @@
 
-# configure aws 
+# prerequisite 
 
+[awscli](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html)
+[eksctl](https://docs.aws.amazon.com/eks/latest/userguide/getting-started-eksctl.html)
+[kubectl](https://docs.aws.amazon.com/eks/latest/userguide/install-kubectl.html)
+
+# configure aws 
     aws configure
 
-# create kubernetes cluster
+# create kubernetes cluster (skip if you already have)
 
     eksctl create cluster --name fission-eks --version 1.14 --nodegroup-name standard-workers --node-type t3.medium --nodes 3 --nodes-min 1 --nodes-max 4 --node-ami auto
+
+# create/update kube config
+
     aws eks --region us-east-1 update-kubeconfig --name fission-eks
 
 # create tiller account
@@ -38,6 +46,11 @@
     git clone https://github.com/malotian/fission-workflows.git && cd fission-workflows
 
 #  setup & test fission - function
+
+## install fission cli
+
+    curl -Lo fission https://github.com/fission/fission/releases/download/1.5.0/fission-cli-linux && chmod +x fission && sudo mv fission /usr/local/bin/
+
 ## create fission environment
 
     fission env create --name nodejs --image fission/node-env
@@ -80,4 +93,5 @@
     fission route list|grep hello-name |cut -f1 -d' '|xargs -n1 fission route delete --name
     fission env delete --name nodejs
     helm del --purge fission-workflows
+
 
