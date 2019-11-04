@@ -8,9 +8,10 @@ apk add --update libstdc++ curl bash ca-certificates git python zip
 apk add --update -t deps curl make py-pip openssl
 
 for pkg in glibc-2.28-r0 glibc-bin-2.28-r0;
-    do curl -sSL https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.28-r0/${pkg}.apk -o /tmp/${pkg}.apk; done && \
+    do curl -sSL https://github.com/sgerrand/alpine-pkg-glibc/releases/download/3.28-r0/${pkg}.apk -o /tmp/${pkg}.apk; 
+done 
 
-apk add --allow-untrusted /tmp/*.apk && rm -v /tmp/*.apk && /usr/glibc-compat/sbin/ldconfig /lib /usr/glibc-compat/lib
+apk add --allow-untrusted /tmp/*.apk && /usr/glibc-compat/sbin/ldconfig /lib /usr/glibc-compat/lib
 
 curl -L "https://github.com/weaveworks/eksctl/releases/download/latest_release/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
 mv /tmp/eksctl /usr/local/bin

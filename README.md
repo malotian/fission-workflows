@@ -1,4 +1,5 @@
 
+
 # prerequisite 
 
 [awscli](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html)
@@ -9,11 +10,16 @@
 
 [helm](https://helm.sh/docs/using_helm/#installing-helm)
 
-# docker image with all prerequisites 
-docker run -it malotian/k8-tools /bin/bash
+# build docker image with all prerequisites 
+	cd docker
+	docker-compose build
 
-# configure aws 
-    aws configure
+# create/update aws config 
+	cp aws.env.sample aws.env
+	# edit/update values for AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_DEFAULT_REGION, AWS_DEFAULT_OUTPUT
+
+# run docker image with all prerequisites 
+	docker run --env-file=aws.env -it malotian/k8-tools /bin/bash
 
 # create kubernetes cluster (skip if you already have)
 
@@ -52,10 +58,6 @@ docker run -it malotian/k8-tools /bin/bash
     git clone https://github.com/malotian/fission-workflows.git && cd fission-workflows
 
 #  setup & test fission - function
-
-## install fission cli
-
-    curl -Lo fission https://github.com/fission/fission/releases/download/1.5.0/fission-cli-linux && chmod +x fission && sudo mv fission /usr/local/bin/
 
 ## create fission environment
 
@@ -99,5 +101,6 @@ docker run -it malotian/k8-tools /bin/bash
     fission route list|grep hello-name |cut -f1 -d' '|xargs -n1 fission route delete --name
     fission env delete --name nodejs
     helm del --purge fission-workflows
+
 
 
