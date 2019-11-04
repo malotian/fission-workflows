@@ -1,0 +1,7 @@
+version: "3.1"
+
+services:
+  k8-tools:
+    image: malotian/k8-tools:latest
+    container_name: k8-tools
+    build: .
