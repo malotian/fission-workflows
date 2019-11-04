@@ -7,6 +7,11 @@
 
 [kubectl](https://docs.aws.amazon.com/eks/latest/userguide/install-kubectl.html)
 
+[helm](https://helm.sh/docs/using_helm/#installing-helm)
+
+# docker image with all prerequisites 
+docker run -it malotian/k8-tools /bin/bash
+
 # configure aws 
     aws configure
 
@@ -23,9 +28,8 @@
     kubectl --namespace kube-system create serviceaccount tiller
     kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
 
-# install helm
+# initialize helm
 
-    curl -sLSf https://raw.githubusercontent.com/helm/helm/master/scripts/get | sudo bash
     helm init --skip-refresh --upgrade --service-account tiller
 
 ## install fission
