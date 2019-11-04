@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM alpine:3.9
 
 # set some defaults
 ENV AWS_ACCESS_KEY_ID AKIA6GR4N6RF2ND3RS6Z

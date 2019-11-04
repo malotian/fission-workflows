@@ -1,8 +1,16 @@
 #!/bin/sh
 
-set -e
-apt-get update
-apt-get -y install curl openssl python-pip zip vim
+# do all in one step
+apk update 
+
+set -ex 
+apk add --update libstdc++ curl bash ca-certificates git python zip
+apk add --update -t deps curl make py-pip openssl
+
+for pkg in glibc-2.28-r0 glibc-bin-2.28-r0;
+    do curl -sSL https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.28-r0/${pkg}.apk -o /tmp/${pkg}.apk; done && \
+
+apk add --allow-untrusted /tmp/*.apk && rm -v /tmp/*.apk && /usr/glibc-compat/sbin/ldconfig /lib /usr/glibc-compat/lib
 
 curl -L "https://github.com/weaveworks/eksctl/releases/download/latest_release/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
 mv /tmp/eksctl /usr/local/bin
@@ -15,13 +23,6 @@ chmod +x /usr/local/bin/fission
 
 curl -sLSf https://raw.githubusercontent.com/helm/helm/master/scripts/get | bash
 
-# aws-iam-authenticator
-# https://github.com/kubernetes-sigs/aws-iam-authenticator
-curl -o aws-iam-authenticator https://amazon-eks.s3-us-west-2.amazonaws.com/1.12.7/2019-03-27/bin/linux/amd64/aws-iam-authenticator
-chmod +x ./aws-iam-authenticator
-mv aws-iam-authenticator /usr/local/bin/aws-iam-authenticator
-aws-iam-authenticator help
-
 # awscli
 pip install awscli
 aws --version
@@ -29,3 +30,7 @@ aws --version
 # install YAML tools
 pip install yamllint yq
 
+# cleanup
+apk del --purge deps
+rm /var/cache/apk/*
+rm -rf /tmp/*
