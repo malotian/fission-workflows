@@ -40,7 +40,7 @@
 
 ## install fission
 
-    helm install --name fission --namespace fission https://github.com/fission/fission/releases/download/1.5.0/fission-all-1.5.0.tgz
+    helm install --name fission --namespace fission https://github.com/fission/fission/releases/download/1.6.0/fission-all-1.6.0.tgz
 
 ## install fission workflows
 
