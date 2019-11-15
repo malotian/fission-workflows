@@ -1,5 +1,3 @@
-
-
 # prerequisite 
 
 [awscli](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html)
@@ -23,24 +21,16 @@
 
 # create kubernetes cluster (skip if you already have)
 
-    eksctl create cluster --name fission-eks --version 1.14 --nodegroup-name standard-workers --node-type t3.medium --nodes 3 --nodes-min 1 --nodes-max 4 --node-ami auto
+    eksctl create cluster --name fission-us-east-1 --version 1.14 --node-private-networking --ssh-access
 
 # create/update kube config
 
-    aws eks --region us-east-1 update-kubeconfig --name fission-eks
-
-# create tiller account
-
-    kubectl --namespace kube-system create serviceaccount tiller
-    kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
-
-# initialize helm
-
-    helm init --skip-refresh --upgrade --service-account tiller
+    aws eks --region us-east-1 update-kubeconfig --name fission-us-east-1
 
 ## install fission
 
-    helm install --name fission --namespace fission https://github.com/fission/fission/releases/download/1.6.0/fission-all-1.6.0.tgz
+    kubectl create namespace fission
+	kubectl -n fission apply -f https://github.com/fission/fission/releases/download/1.6.0/fission-all-1.6.0.yaml
 
 ## install fission workflows
 
@@ -101,6 +91,7 @@
     fission route list|grep hello-name |cut -f1 -d' '|xargs -n1 fission route delete --name
     fission env delete --name nodejs
     helm del --purge fission-workflows
+
 
 
 
