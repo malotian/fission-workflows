@@ -5,4 +5,6 @@ FROM alpine:3.9
 COPY install.sh /opt/install.sh
 RUN /opt/install.sh
 
+WORKDIR /usr/share
+
 CMD bash

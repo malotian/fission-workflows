@@ -10,7 +10,8 @@ set -ex && \
     /usr/glibc-compat/sbin/ldconfig /lib /usr/glibc-compat/lib
 
 apk update 
-apk add --update bash ca-certificates git python zip
+apk add --update bash ca-certificates git python zip openssh
+apk add --update openjdk8-jre
 apk add --update -t deps curl make py-pip openssl
 
 curl -L "https://github.com/weaveworks/eksctl/releases/download/latest_release/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
