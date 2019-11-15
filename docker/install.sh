@@ -1,17 +1,14 @@
 #!/bin/sh
 
-# do all in one step
-set -ex && \
-    apk --update add libstdc++ curl ca-certificates && \
-    for pkg in glibc-2.28-r0 glibc-bin-2.28-r0; \
-        do curl -sSL https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.28-r0/${pkg}.apk -o /tmp/${pkg}.apk; done && \
-    apk add --allow-untrusted /tmp/*.apk && \
-    rm -v /tmp/*.apk && \
-    /usr/glibc-compat/sbin/ldconfig /lib /usr/glibc-compat/lib
+chmod +x /tmp/lingk-fission-cli.jar
+(echo '#!/usr/bin/java -jar'; cat /tmp/lingk-fission-cli.jar) > /usr/bin/lingk
+chmod +x /usr/bin/lingk
 
+# cleanup
+# do all in one step
+set -ex 
 apk update 
 apk add --update bash ca-certificates git python zip openssh
-apk add --update openjdk8-jre
 apk add --update -t deps curl make py-pip openssl
 
 curl -L https://github.com/fission/fission/releases/download/1.6.0/fission-cli-linux -o /usr/local/bin/fission
@@ -40,6 +37,3 @@ apk del --purge deps
 rm /var/cache/apk/*
 rm -rf /tmp/*
 
-chmod +x /tmp/lingk-fission-cli-0.0.1-SNAPSHOT.jar
-(echo '#!/usr/bin/env java -jar'; cat /tmp/lingk-fission.jar) > /usr/bin/lingk
-chmod +x /usr/bin/lingk
