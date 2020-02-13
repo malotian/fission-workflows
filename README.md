@@ -21,8 +21,8 @@
 
 # create kubernetes cluster (skip if you already have)
 
-    eksctl create cluster --name fission-us-east-1 --version 1.14 --node-private-networking --ssh-access
-
+    eksctl create cluster --name fission-dev-us-east-1 --version 1.14 --node-private-networking --region=us-east-1 --zones=us-east-1a,us-east-1b,us-east-1d
+    
 # create/update kube config
 
     aws eks --region us-east-1 update-kubeconfig --name fission-us-east-1
